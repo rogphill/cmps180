@@ -1,0 +1,3 @@
+java -classpath C:\Users\Rob\Documents\UCSC\cmps180\lab4\postgresql-42.2.5.jar C:\Users\Rob\Documents\UCSC\cmps180\lab4\RunStockMarketApplication.java
+
+java -cp ".;postgresql-42.2.5.jar" RunStockMarketApplication

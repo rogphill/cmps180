@@ -1,0 +1,725 @@
+% LaTeX template adapted from: https://www.overleaf.com/latex/templates/simple-math-homework-template/tbszsswsndrz
+\documentclass[landscape,8pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{extsizes}
+\usepackage[]{amsthm} %lets us use \begin{proof}
+\usepackage[]{amssymb} %gives us the character \varnothing
+\usepackage{amsmath} %for equations
+\usepackage[]{listings} %for code blocks
+\usepackage{graphicx} %for diagrams
+\usepackage{fancyhdr} %for headers
+\usepackage[letterpaper, margin=0.25in]{geometry}
+\usepackage{tikz} % for drawings
+\usepackage{multicol}
+\usepackage{ifthen}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{color}
+
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\setlist{nolistsep}
+\setlist[itemize]{leftmargin=0.25pc,itemsep=0em}
+\usetikzlibrary{arrows.meta,shapes.arrows,chains,decorations.pathreplacing}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+            {-1ex plus -.5ex minus -.2ex}%
+            {0.5ex plus .2ex}%x
+            {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+            {-1explus -.5ex minus -.2ex}%
+            {0.5ex plus .2ex}%
+            {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+            {-1ex plus -.5ex minus -.2ex}%
+            {1ex plus .2ex}%
+            {\normalfont\small\bfseries}}
+\makeatother
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+
+\lstset{frame=single,
+  language=c,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=fixed,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\newcommand{\code}{\lstinline}
+\graphicspath{}
+\pagestyle{empty}
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+{ \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{-0.25em}
+\setlength{\headheight}{16pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rhead{Rob Phillips | CruzID: rogphill | Student ID: 1597347}
+
+\begin{document}
+    \footnotesize
+    \begin{multicols}{4}
+    \setlength{\premulticols}{1pt}
+    \setlength{\postmulticols}{1pt}
+    \setlength{\multicolsep}{1pt}
+    \setlength{\columnsep}{2pt}
+    \begin{itemize}
+    \item \code{Tuples and Relations:}
+    \begin{itemize}
+        \item \emph{Tuple:} a $k$\emph{-tuple} is an ordered sequence of $k$ values
+        \item If $D_1, D_2, \ldots, D_k$ are sets of elements then the cartesian product $D_1 \times
+        D_2 \times \ldots D_k$ is the set of all $k$-tuples $(d_1, d_2, \ldots, d_k)$ such that
+        $\forall 1 \leq i \leq k:\ d_i \in D_i$
+        \item \emph{Relation:}
+        \begin{itemize}
+            \item A $k$\emph{-ary relation} is a subset of $D_1 \times D_2 \times \ldots D_k$ where
+            each $D_i$ is a set of elements
+            \item $D_i$ is the \emph{domain (or datatype)} of the $i^{th}$ column of the relation
+            \item Domains may be enumerated $\{``AMS'', ``CMPS'', ``TIM''\}$ or may be of standard
+            types 
+        \end{itemize}
+        \item An \emph{attribute} is the name of a column in a relation
+        \item A \emph{relation schema} $R$ is a set $\{A_1, \ldots, A_k\}$ of attributes written
+        $R(A_1, \ldots, A_k)$, where $A_i$ is the name of the $i^{th}$ column. 
+        \item A \emph{relation database schema} or \emph{database schema} is a set of 
+        schemas with disjoint relation names.
+    \end{itemize}
+    \item \code{SQL Primitives:}
+    \begin{itemize}
+        \item \code{CHAR(n)}: fixed-length string of up to $n$ characters (blank-padded with
+        trailing spaces)
+        \item \code{VARCHAR(n)}: also a string of up to $n$ characters
+        \item \code{BIT(n)}: padded on the right with \code{0}s.
+        \item \code{BIG VARYING(n)}: works like \code{VARCHAR}
+        \item \code{BOOLEAN}: true, false, unknown
+        \item \code{INT} or \code{INTEGER}: works like in C
+        \item \code{SHORTINT}: works like \code{short int}
+        \item \code{DECIMAL(n, d)}, \code{NUMERIC(n, d)}: total of $n$ digits, $d$ of them to the
+        right of the decimal point
+        \item \code{FLOAT(p)}, \code{FLOAT}, \code{REAL}
+        \item \code{DOUBLE PRECISION}: analagous to \code{double} in c
+        \item \code{DATE}, \code{TIME}, \code{TIMESTAMP}, \code{INTERVAL}: constants are character
+        strings of specific form e.g. \code{DATE `2017-09-13'}
+        \begin{itemize}
+            \item \code{TIME A - TIME B} results in an \code{INTERVAL}
+            \item \code{TIME A + INTERVAL B} results in a \code{TIME}
+            \item Similarly for \code{TIMESTAMP} and \code{DATE}
+        \end{itemize}
+    \end{itemize}
+    \item \code{Tables:} 
+    \begin{itemize}
+    \item A \emph{key} of a relation schema $R$ is a subset $K$ of the attributes of $R$ such that:
+        \begin{itemize}
+            \item $\forall Y \in R: K \rightarrow Y$
+            \item No proper subset of $K$ has the above property
+        \end{itemize}
+        \item A \emph{superkey} is a set of attributes that includes a key
+        \item \code{CREATE TABLE R(A, B, C, PRIMARY KEY(A))}:
+        \begin{itemize}
+        \item None of the tuples in \code{R} can have null \code{A} values
+        \item Rows are uniquely identified by their \code{A} values
+        \item There can be $\leq 1$ primary key for a table
+        \end{itemize}
+        \item \code{CREATE TABLE S(D, E, F, UNIQUE(D))}:
+        \begin{itemize}
+            \item Rows in \code{S} can contain null \code{D} values
+            \item Rows with \emph{non-null} \code{D} values are uniquely identified by their \code{D} values
+            \item There can be multiple unique constraints in addition to a primary key
+        \end{itemize}
+        \item \code{CREATE TABLE T(G NOT NULL, H DEFAULT `foo')}:
+        \begin{itemize}
+            \item If no default value is specified and no value is entered then the value will be \code{NULL}
+            \item \code{NOT NULL} prevents null values
+        \end{itemize}
+    \end{itemize}
+    \item \code{Queries:}
+    \begin{itemize}
+        \item Basic form: \\
+\code{SELECT [DISTINCT] c1, c2, ..., cm} \\
+\code{FROM R1, R2, ..., Rn} \\
+\code{[WHERE condition]}
+    \item \code{SELECT}:
+    \begin{itemize}
+        \item Projection: \code{SELECT title, year}
+        \item \code{DISTINCT}: Removes duplicate tuples from result
+        \item Aliasing: \code{SELECT title AS name}
+        \item Expressions are allowed in the \code{SELECT} clause. Ex: \code{SELECT title AS name, length * 60 AS durationInSeconds}
+        \item Constants can also be included: \code{SELECT title AS name, length * 60 AS durationInSeconds, `seconds' AS inSeconds}
+    \end{itemize}
+        \item \code{WHERE}:
+        \begin{itemize}
+            \item Comparison operators: \code{=}, \code{<>}, \code{<}, \code{>}, \code{<=}, \code{>=}
+            \item Logical connectives: \code{AND}, \code{OR}, \code{NOT}
+            \item Arithmetic expressions: \code{+}, \code{-}, \code{*}, \code{/}, etc
+            \item In general the \code{WHERE} clause is a boolean expression where each condition is
+            of the form \emph{expression op expression}
+        \end{itemize}
+        \item Pattern matching with the \code{LIKE} operator:
+        \begin{itemize}
+            \item $s$ \code{LIKE} $p$, $s$ \code{NOT LIKE} $p$
+            \item $s$ is a string, $p$ is a pattern
+            \item `\code{\%}' stands for \code{0} or more arbitrary characters
+            \item `\code{_}' stands for exactly one arbitrary character
+            \item quotes: \code{WHERE x LIKE ''''} matches one 
+            \item quotes: \code{WHERE x LIKE ''''''} matches two 
+            \item  \code{\%} or \code{_}: \code{WHERE x LIKE `!\%\%!' ESCAPE '!'} where
+            \code{!} can be any character
+        \end{itemize}
+        \item \code{DATE} and \code{TIME} and \code{TIMESTAMP}
+        \begin{itemize}
+            \item Separate data types
+            \item Constants are character strings of the form: \\
+\code{DATE '2015-01-13'} \\
+\code{TIME '16:45:33'} \\
+\code{TIMESTAMP '2015-01-13 16:45:33'} 
+            \item \code{DATE}, \code{TIME}, \code{TIMESTAMP} can be compared using ordinary
+            comparison operators e.g. \code{WHERE ReleaseDate <= DATE '1990-06-19'}
+\end{itemize}
+        \item If \code{Salary} is \code{NULL} then the following will be \code{UNKNOWN}:
+        \begin{itemize}
+            \item \code{Salary = 10}
+            \item \code{Salary <> 10}
+            \item \code{90 > Salary OR 90 <= Salary}
+            \item \code{Salary = NULL}
+            \item \code{Salary <> NULL}
+            \end{itemize}
+        \item Ordering the result:
+        \begin{itemize}
+            \item \code{ORDER BY} presents the result in a sorted order
+            \item By default the result will be ordered in ascending order \code{ASC}
+            \item For descending order on an attribute you write \code{DESC} in the list of attributes
+        \end{itemize}
+        \item Multiple relations in \code{FROM} clause: for every tuple $t_1 \in R_1, t_2 \in R_2,
+        \ldots, t_n from R_n$ if $t_1, \ldots, t_n$ satisfy \emph{condition} then add the resulting
+        tuple that consists of $c_1, c_2, \ldots, c_m$ components of $t$ into the result
+    \end{itemize}
+    \item \code{Joins:} With relations \code{R(A,B,C)} and \code{S(C,D,E)}
+    \begin{itemize}
+        \item \code{R JOIN S ON R.B=S.D AND R.A=S.E}:
+        \begin{itemize}
+            \item Selects only tuples from \code{R} and \code{S} where \code{R.B=S.D} and \code{R.A=S.E}
+            \item Schema of the resulting relation: \code{(R.A, R.B, R.C, S.C, S.D, S.E)}
+            \item Equivalent to: \\
+            \code{SELECT *} \\
+            \code{FROM R, S} \\
+            \code{WHERE R.B=S.D AND R.A=S.E;}
+        \end{itemize}
+        \item \code{R CROSS JOIN S}:
+        \begin{itemize}
+            \item Product of the two relations \code{R} and \code{S}
+            \item Schema of the resulting relation: \code{(R.A, R.B, R.C, S.C, S.D, S.E)}
+            \item Equivalent to: \\
+            \code{SELECT *} \\
+            \code{FROM R, S;}
+        \end{itemize}
+        \item \code{R NATURAL JOIN S}:
+        \begin{itemize}
+            \item Schema of the resulting relation: \code{(A, B, C, D, E)}
+            \item Equivalent to: \\
+            \code{SELECT R.A, R.B, R.C, S.D, S.E} \\
+            \code{FROM R, S} \\
+            \code{WHERE R.C = S.C}
+        \end{itemize}
+    \end{itemize}
+    \item \code{Set and Bag Operations:} \code{R(A,B,C), S(A,B,C)}
+    \begin{itemize}
+        \item \code{UNION}: Set union
+        \begin{itemize}
+            \item Input to union must be \emph{union-compatible}: \code{R} and \code{S} must have
+            attributes of the same type, in the same order
+            \item Output of the union has the same schema as \code{R} or \code{S}
+            \item Meaning: Output consists of the \emph{set} of all tuples from \code{R} and from \code{S}
+            \item Could have been called \code{UNION DISTINCT} \\
+            \code{(SELECT * FROM R)} \\
+            \code{UNION} \\
+            \code{(SELECT * FROM S)} 
+        \end{itemize}
+        \item \code{UNION ALL}: Bag union
+        \begin{itemize}
+            \item Input must be \emph{union-compatible}
+            \item Output has the same schema as \code{R} or \code{S}
+            \item Output consists of the collection of all tuples from \code{R} and from \code{S} \emph{including duplicates}.
+            \item Attributes/column names may be different - \code{R}'s are used
+        \end{itemize}
+        \item \code{INTERSECT}, \code{INTERSECT ALL}: set/bag intersection
+        \begin{itemize}
+            \item Input must be union-compatible.
+            \item $Query_1$ \code{INTERSECT} $Query_2$ 
+            \item $Query_1$ \code{INTERSECT ALL} $Query_2$
+            \item Find all tuples that are in the results of both $Query_1$ and $Query_2$.
+            \item \code{INTERSECT} is distinct. \code{INTERSECT ALL} reports duplicates.
+        \end{itemize}
+        \item \code{EXCEPT}, \code{EXCEPT ALL}: set difference, bag difference
+        \begin{itemize}
+            \item Must be union-compatible
+            \item $Query_1$ \code{EXCEPT} $Query_2$
+            \item $Query_1$ \code{EXCEPT ALL} $Query_2$
+            \item Find all tuples that are in the result of $Query_1$ and not in the result of $Query_2$
+            \item \code{EXCEPT} is distinct, \code{EXCEPT ALL} is not
+        \end{itemize}
+        \item Order of operations: \code{INTERSECT} has higher precedence than \code{UNION} and \code{EXCEPT}.
+    \end{itemize}
+    \item \code{Subqueries:}
+    \begin{itemize}
+        \item A query embedded in another query
+        \item Can be used as a boolean or can return a constant or can return a relation
+        \item \code{IN}, \code{NOT IN}: used to select from subquery that returns relation
+        \item \code{WHERE} $A$ \code{< ANY}: checks that attribute $A$ is less than at least one of
+        the answers returned by the subquery.
+        \item \code{EXISTS}: Checks that subquery returns non-empty result. Also: \code{NOT EXISTS}
+    \end{itemize}
+    \item \code{Aggregates and Grouping:}
+    \begin{itemize}
+    \item Basic SQL has 5 aggregation operators: \code{SUM}, \code{AVG}, \code{MIN}, \code{MAX}, \code{COUNT}
+    \item Aggregation operators work on scalar values, except for \code{COUNT(*)} which counts the
+    number of tuples
+    \item \code{GROUP BY} clause follows the \code{WHERE} clause
+    \begin{itemize}
+        \item Let Result begin as an empty multiset of tuples
+        \item For every tuple $t_1$ from $R_1$, $t_2$ from $R_2, \ldots, t_n$ from $R_n$: if $t_1,
+        \ldots, t_n$ satisfy \emph{condition} then add the resulting tuple that consist of $c_1,
+        c_2, \ldots, c_m$ of the $t_i$ into Result
+        \item Group the tuples according to the grouping attributes - if \code{GROUP BY} is omitted,
+        the entire table is one group
+    \end{itemize}
+    \item \code{NULL}s are ignored in any aggregation
+    \begin{itemize}
+        \item They do not contribute to the \code{SUM}, \code{AVG}, \code{COUNT}, \code{MIN},
+        \code{MAX} of an attribute
+        \item \code{COUNT(*)} = the number of tuples in a relation even if some columns are \code{NULL}
+        \item \code{COUNT(A)} is the number of tuples with \emph{non-}\code{NULL} values for $A$
+        \item \code{SUM}, \code{AVG}, \code{MIN}, \code{MAX} on an empty result (no tuples) is \code{NULL}
+        \item \code{COUNT} of an empty result is \code{0}
+        \item \code{GROUP BY} does \emph{not} ignore \code{NULL}
+    \end{itemize}
+    \item \code{HAVING} clause:
+    \begin{itemize}
+        \item Choose groups based on some aggregate property of the group itself
+        \item Same attributes and aggregates that can appear in the \code{SELECT} can appear in the
+        \code{HAVING} clause condition
+        \item Can use \code{EVERY} to constrain \code{HAVING} to all tuples in the group e.g. \code{HAVING COUNT(*) > 1 AND EVERY (S.age <= 40)}
+    \end{itemize}
+\end{itemize}
+\item \code{Database Modification Statements:}
+\begin{itemize}
+    \item \code{INSERT INTO R(A1, ..., An) VALUES (v1, ..., vn)}: a tuple $(v_1, \ldots, v_n)$ is
+    inserted into $R$ such that $A_i = v_i \forall i$ and default values (perhaps \code{NULL}) are
+    entered for any missing attributes.
+    \item \code{DELETE FROM R WHERE <condition>}: Deletes \emph{all} tuples such that the condition
+    evaluates as true - if there is no \code{WHERE} clause it will delete all tuples in $R$
+    \item \code{UPDATE R SET <new-value-assignments> WHERE <condition>}: Change the given attribute
+    to the new value in every tuple in $R$ where the condition is true
+    \item Semantics: database modifications are completely evaluated on the old state of the
+    database producing a new state of the database
+\end{itemize}
+\item \code{Transaction:}
+\begin{itemize}
+    \item Transactions provide ACID properties: atomicity, consistency, isolation, durability
+    \item \code{START TRANSACTION} or \code{BEGIN TRANSACTION}: marks the beginning of a
+    transaction, followed by one or more SQL statements
+    \item \code{COMMIT}: Ends the transaction. All changes are durably written to the backing store
+    and become visible to other transactions.
+    \item \code{ROLLBACK}: Causes the transaction to abort or terminate. None of the changes are committed.
+    \item \code{SET TRANSACTION READ ONLY}: 
+    \begin{itemize}
+        \item set \emph{before} the transaction begins, tells the SQL system that the next
+        transaction is read-only
+        \item SQL uses this to parallelize many read-only transactions
+    \end{itemize}
+    \item \code{SET TRANSACTION READ WRITE}:
+    \begin{itemize}
+        \item Tells SQL that the next transaction may write data in addition to read
+        \item Default option if not specified, often not specified
+    \end{itemize}
+    \item Dirty Reads: \emph{Dirty data} refers to data that is written by a transaction but has not
+    yet been committed by the transaction
+    \item Isolation levels:
+    \begin{itemize}
+        \item \code{SET TRANSACTION READ WRITE ISOLATION LEVEL READ UNCOMMITTED}
+        \item Default isolation level depends on system, most run with \code{READ COMMITTED} or \code{SNAPSHOT ISOLATION}
+        \item \code{READ COMMITTED}: only clean(committed) reads but you might read data committed
+        by other transactions
+        \item \code{REPEATABLE READ}: repeated queries of a tuple during a transaction will retrieve
+        the same value. Also, a second scan may return `phantoms' which are tuples newly inserted
+        while the transaction is running.
+        \item \code{SERIALIZABLE}: Can be replayed one by one.
+    \end{itemize}
+\end{itemize}
+    \item \code{Constraints:}
+    \begin{itemize}
+        \item \code{Key/Unique} constraint: No repetitions of this value in the relation
+        \item \code{Foreign-key} constraint: Referential integrity. Value must exist in another
+        relation as specified. Referenced attributes must be \code{PRIMARY KEY} or \code{UNIQUE}.
+        \begin{itemize}
+            \item With attribute:\\
+            \code{beer CHAR(20) REFERENCES Beers(name)}
+            \item As schema element:\\
+        \code{FOREIGN KEY (beer)}\\
+        \code{  REFERENCES Beers(name)}
+        \end{itemize}
+        \item \code{Value-based} constraint: \code{CHECK(<condition>)}. Checked on insert or update.
+        \item Enforcing constraints:
+        \begin{itemize}
+            \item \emph{Default:} Reject the modification
+            \item \emph{Cascade:} Make changes to maintain consistency
+            \item \emph{Set NULL:} Change dependent values to \code{NULL}
+            \item Selected independently with \code{ON [UPDATE, DELETE] [SET NULL, CASCADE]}
+        \end{itemize}
+        \item \code{Assertions:} database-schema elements, like relations or views. Defined by:\\
+        \code{CREATE ASSERTION <name>} \\
+        \code{  CHECK (<condition>)}
+    \end{itemize}
+    \item \code{Triggers:}
+    \begin{itemize}
+        \item Event-Condition-Action or \emph{ECA} rule:
+        \begin{itemize}
+            \item \emph{Event:} Typically a DB modification
+            \item \emph{Condition:} Any SQL boolean expression
+            \item \emph{Action:} Any SQL statements
+        \end{itemize}
+        \item \emph{Create:}
+        \begin{itemize}
+            \item \code{CREATE TRIGGER <name>}
+            \item \code{CREATE OR REPLACE TRIGGER <name>}
+        \end{itemize}
+        \item \emph{The Event:}
+        \begin{itemize}
+            \item \code{[AFTER, BEFORE] [INSERT, DELETE, UPDATE [ON]]}
+            \item Can be \code{INSTEAD OF} if the relation is a view
+        \end{itemize}
+        \item \code{FOR EACH ROW}
+        \begin{itemize}
+            \item Triggers are `row-level' or `statement-level'
+            \item \code{FOR EACH ROW} means row-level, absence means statement-level
+            \item \emph{Row level triggers} execute once for each tuple
+            \item \emph{Statement-level} execute once for a SQL statement
+        \end{itemize}
+        \item \code{REFERENCING}
+        \begin{itemize}
+            \item \code{INSERT} statements imply a new tuple or table
+            \item \code{DELETE} implies an old tuple or table
+            \item \code{UPDATE} implies both
+            \item \code{[NEW OLD] [TUPLE, TABLE] AS <name>}
+        \end{itemize}
+        \item \emph{The Condition:}
+        \begin{itemize}
+            \item Any boolean condition
+            \item Evaluated on the DB as it existed \code{BEFORE}/\code{AFTER} the event
+        \end{itemize}
+        \item \emph{The Action:}
+        \begin{itemize}
+            \item There can be more than one SQL statement
+            \item Surround with \code{BEGIN ... END}
+        \end{itemize}
+    \end{itemize}
+    \item \code{Relational Algebra:}
+    \begin{itemize}
+        \item Selection: $\sigma_{condition}(R)$
+        \begin{itemize}
+            \item \emph{Input:} Relation with schema $R(A_1, \dots, A_n)$
+            \item \emph{Output:} Relation with attributes $A_1, \dots, A_n$
+            \item \emph{Meaning:} Extracts rows which satisfy condition
+        \end{itemize}
+        \item Projection: $\pi_{<attribute\ list>}(R)$
+        \begin{itemize}
+            \item \emph{Input:} Relation with schema $R(A_1, \dots, A_n)$
+            \item \emph{Output:} Relation with listed attributes
+            \item \emph{Meaning:} Extracts all rows from $R$ and outputs only those attributes listed
+        \end{itemize}
+            \item Union: $R \cup S$
+            \begin{itemize}
+                \item \emph{Input:} Union-compatible relations $R,S$
+                \item \emph{Output:} Relation with the same type of $R$ (or $S$)
+                \item \emph{Meaning:} The output is the set of all tuples in either $R$ or $S$ or
+                both
+                \item Both \emph{commutative} and \emph{associative}
+            \end{itemize}
+            \item Set difference: $R - S$
+            \begin{itemize}
+                \item \emph{Input:} Union-compatible relations $R,S$
+                \item \emph{Output:} Relation with the same type of $R$ (or $S$)
+                \item \emph{Meaning:} $\{x\ | x \in R,\ x \notin S\}$
+            \end{itemize}
+            \item Cross-product: $R \times S$
+            \begin{itemize}
+                \item \emph{Input:} $R(A_1, \dots, A_n), S(B_1, \dots, B_m)$
+                \item \emph{Output:} $T(A_1, \dots, A_n, B_1, \dots, B_m)$
+                \item \emph{Meaning:} $R \times S =$ $ \{(a_1, \dots, a_n, b_1, \dots, b_m) $ $| (a_1,
+                \dots, a_m) \in R,\ (b_1, \dots, b_m) \in S) \}$
+            \end{itemize}
+            \item Intersection: $R \cap S$ is a \emph{derived operator} \\
+            $R \cap S = R - (R - S) = S - (S - R)$
+        \item Renaming: $\rho_{S(A_1, \dots, A_n)}(R)$
+        \begin{itemize}
+            \item \emph{Input:} A relation $R$ and a set of attributes $\{B_1, \dots, B_n\}$
+            \item \emph{Output:} A relation $S$ and attributes $A_1, \dots, A_n$
+        \end{itemize}
+        \item Natural Join: $R \bowtie S$
+        \begin{itemize}
+            \item \emph{Input:} Two relations $R$ and $S$ where $\{A_1, \dots, A_k\}$ is a set of
+            common attributes between them
+            \item \emph{Output:} A relation where its attributes are $attr(R) \cup attr(S)$.
+            Consists of $R \times S$ without any repeats of the common attributes.
+            \item \emph{Meaning:} $R \bowtie S = \pi_{(attr(R) \cup attr(S))} (\sigma_{C} (R \times
+            S))$ (where $C = R.A_1 = S.A_1 \text{ AND } \dots \text{ AND } R.A_k = S.A_k$)
+        \end{itemize}
+        \item Semi-Join: $R \ltimes S = \pi_{attr(R)}(R \bowtie S)$
+        \item Theta Join: $\bowtie_\theta$
+        \begin{itemize}
+            \item \emph{Input:} $R(A_1, \dots, A_n), S(B_1, \dots, B_m)$
+            \item \emph{Output:} $T(A_1, \dots, A_n, B_1, \dots, B_m)$ Identical attributes are
+            disambiguated with the relation names.
+            \item \emph{Meaning:} Equivalent to writing $\sigma_{\theta}(R \times S)$.
+        \end{itemize}
+        \item Division: $R/S$ or $R \div S$
+        \begin{itemize}
+            \item \emph{Input:} Two relations $R$ and $S$ such that $attr(S) \subset attr(R)$ and
+            $attr(S) \neq \emptyset$
+            \item \emph{Output:} Relation whose attributes are in $attr(R) - attr(S)$
+            \item \emph{Meaning:} Given $R(a,b,c,d)$, $S(b,d)$: $R \div S$ outputs $(a,c)$ for each
+            tuple in $S$ such that $R.b = S.b$ and $R.d = S.d$
+        \end{itemize}
+        \item \emph{Independence:} The five basic operators are indepdent of each other.
+        \begin{itemize}
+            \item $\times$ increases columns
+            \item $\cup$ increases rows
+            \item $\pi$ decreases columns
+            \item $\sigma$ is binary, decreases rows
+            \item $-$ is unary, decreases rows
+        \end{itemize}
+    \end{itemize}
+    \item \code{STORED PROCEDURES}
+    \begin{itemize}
+        \item \code{PSM} or \emph{persistent stored modules} store procedures as DB schema elements
+        \item Basic form:\\
+\code{CREATE PROCEDURE <name> (}\\
+\code{  <parameter list>) RETURNS <type>}\\
+\code{  <optional local declarations>}\\
+\code{  <body>;}
+        \item Uses mode-name-type triples where the mode can be:
+        \begin{itemize}
+            \item \code{IN}: procedure uses value, doesn't change 
+            \item \code{OUT}: procedure changes value, doesn't use
+            \item \code{INOUT}: both
+        \end{itemize}
+        \item Function parameters must be of type \code{IN}
+        \item Procedures invoked with \code{CALL <name>(<parameters>)}
+        \item May be used in SQL expressions wherever their return type fits
+        \item \code{RETURN <expression>} sets the return value but doesn't terminate execution
+        \item \code{DECLARE <name> <type>} declares local variable
+        \item \code{BEGIN ... END} for groups of statements
+        \item \code{SET <variable> = <expression>}
+        \item \code{IF <condition> THEN <statements> END IF;}
+        \item Add \code{ELSE <statement(s)>} as \code{IF...THEN...ELSE...END IF}
+        \item Add additional cases: \code{IF...THEN...ELSEIF...ELSE}
+        \item Basic loop:\\
+\code{<loop name>: LOOP}\\
+\code{<statements>}\\
+\code{END LOOP;}
+        \item Leave loop with \code{LEAVE <loop name>}
+        \item Also: \code{WHILE <condition> DO <statements> END WHILE;}
+        \item Also: \code{REPEAT <statements> UNTIL <condition> END REPEAT;}
+        \item Queries producing one value can be the expression in an assignment.
+        \item Queries returning one row: \code{SELECT ... INTO ...}
+        \item Cursors:
+        \begin{itemize}
+            \item \code{DECLARE c CURSOR FOR <query>} to declare, binds values
+            \item \code{OPEN c} to open
+            \item \code{CLOSE c} to close
+            \item \code{FETCH FROM c INTO x1, x2, ..., xn} sets the $x$'s to the values of a tuple
+            \item \code{c} moves to the next tuple automatically
+            \item \code{DECLARE NotFound CONDITION FOR SQLSTATE '02000'}
+            \item \code{CURRENT OF c} allows use in \code{WHERE} for current tuple
+        \end{itemize}
+    \end{itemize}
+    \item \code{EMBEDDED SQL}
+    \begin{itemize}
+        \item Uses preprocessor in host language to turn SQL statements into host library calls
+        \item Declare shared variables with \\
+\code{EXEC SQL BEGIN DECLARE SECTION;}\\
+\code{<host-language declarations>}\\
+\code{EXEC SQL END DECLARE SECTION;}
+        \item Shared variables must be preceded by a colon. Can be used as if they were constants
+        provided by the host language program. Can get values from SQL statements and pass those
+        values to the host language program. In the host language they behave like any other
+        variable.
+        \item Usage: \code{<SQL varname> = :<host varname>}
+        \item Every SQL statement must begin \code{EXEC SQL ...}
+        \item PrepareStatement:\\
+\code{EXEC SQL PREPARE <query-name>}\\
+\code{  FROM <text of query>;}
+        \item Execute: \code{EXEC SQL EXECUTE <query-name>;}
+        \item If only using it once:
+\code{EXEC SQL EXECUTE IMMEDIATE <text>;}
+        \end{itemize}
+        \item \code{JDBC}
+    \begin{itemize}
+        \item Provides \code{Statement} and \code{PreparedStatement} classes
+        \item Usage:\\
+\code{import java.sql.*;}\\
+\code{Class.forName(com.mysql.jdbc.Driver);}\\
+\code{Connection myCon = DriverManager.getConnection(...);}
+        \item \code{createStatement()} takes a string of a SQL statement
+        \item \code{prepareStatement()} is configurable
+        \item Use \code{executeQuery} or \code{executeUpdate} as appropriate
+        \item Both return \code{ResultSet} which uses something like a cursor, \code{rs.next()} gets
+        the next one
+        \item When a resultSet returns a tuple we get the components with \code{getX(i)} where
+        \code{X} is a type and \code{i} is the component number
+    \end{itemize}
+    \item \code{FUNCTIONAL DEPENDENCIES}
+    \begin{itemize}
+        \item Let $R$ be a relation schema. An FD is an integrity constraint $X \rightarrow Y$ where
+        $X$ and $Y$ are non-empty subsets of the attributes of $R$
+        \item A relation instance $r$ of $R$ \emph{satisfies} the FD $X \rightarrow Y$ iff for every
+        pair of tuples $t, t^\prime \in r: t[X] = t^\prime[X] \implies t[Y] = t^\prime[Y]$
+        \item A set $\mathcal{F}$ of FDs implies an FD $F$ if for every instance $r$ that satisfies
+        $\mathcal{F}$, it must be true that $r$ satisfies $F$: $\mathcal{F} \models F$
+        \item \code{ARMSTRONG'S AXIOMS}
+        \begin{itemize}
+            \item \emph{Reflexivity:} $Y \subseteq X \implies X \rightarrow Y$ (trivial)
+            \item \emph{Augmentation:} $X \rightarrow Y \implies \forall Z:\ XZ \rightarrow YZ$
+            \item \emph{Transitivity:} $X \rightarrow Y,\ Y \rightarrow Z \implies X \rightarrow Z$
+        \end{itemize}
+        \item $\mathcal{F} \vdash F$ means $F$ can be derived from $\mathcal{F}$ using Armstrong's
+        Axoms ($\mathcal{F}$ generates $F$)
+        \item Closure: $\mathcal{F}^+$ means the set of all FDs implied by $\mathcal{F}$
+        \item $\mathcal{F} \vdash X \rightarrow A \iff A \in X^+$
+    \end{itemize}
+    \item \code{NORMAL FORMS}
+    \begin{itemize}
+        \item \emph{First Normal Form (1NF):} Very basic requirement of the data model. Type of
+        every attribute must be atomic.
+        \item \emph{Boyce-Codd Normal Form (BCNF):} Let $R$ be a relation schema, $\mathcal{F}$ a
+        set of FDs that holds for $R$, $A$ an attribute in $R$, and $X$ a subset of attributes in
+        $R$. $R$ is in $BCNF$ iff for every FD $X \rightarrow A$: $A \in X$, or $X$ is a superkey.
+        \item \emph{Third Normal Form (3NF):} Like $BCNF$ except $A$ can be a part of a key of $R$.
+    \end{itemize}
+    \item \code{DECOMPOSITION}
+    \begin{itemize}
+        \item Given a relation $R$, a decomposition is a set of attributes $X_1, \dots, X_k$ (not
+        necessarily disjoint) such that each $X_i \subseteq attr(R)$ and $X_1 \cup \dots \cup X_k =
+        attr(R)$
+        \item $\pi_{X_i}(R) = R_i$ with instances of $R$ written $r$ and instances of $R_i$ written $r_i$
+        \item Used to eliminate anomalies
+        \item \emph{Lossless Join Decomposition} if it allows recreation of $R$ by using $r_1
+        \bowtie \dots \bowtie r_k$
+        \item Lossless decomposition of $R$ into $R_1(X_1), R_2(X_2)$ requires $\mathcal{F}^+$ has
+        either $X_1 \cap X_2 \rightarrow X_1$ or $X_1 \cap X_2 \rightarrow X_2$.
+        \item The FDs on $R_i$ are the FDs in $\mathcal{F}^+$ that mention only $attr(R)$
+        \item The decomposition is \emph{dependency-preserving} if, when the $R_i$'s are rejoined,
+        the FDs that were on the $R_i$s imply all of the original FDs in $\mathcal{F}$
+        \item Given a schema and set of FDs, it's always possible to decompose into a set of 
+        \begin{itemize}
+            \item $BCNF$ relations which eliminate anomalies and is a lossless join decomposition
+            but might not be dependency-preserving
+            \item $3NF$ relations which is a lossless join decomposition and is
+            dependency-preserving but might not always eliminate anomalies
+        \end{itemize}
+    \end{itemize}
+    \item \code{SEMI-STRUCTURED DATA}
+    \begin{itemize}
+        \item \code{XML}
+        \begin{itemize}
+            \item \emph{Tags} come in pairs \code{<data>...</date>}
+            \item Must be properly nested
+            \item Start the doc with \code{<?xml ... ?>}
+            \item Normal declaration is \code{<?xml version = "1.0" standalone = "yes" ?>}
+            \item An attribute is anything surrounded by a tag
+            \item A list is multiple tags used repeatedly
+            \item A tag attribute goes inside the tag e.g. \code{<word lang="en">}
+            \item Can use \code{id="foo"} attribute to specify an element and then reference it with
+            \code{idrefs="foo"}
+            \item DTD specifies syntax for a document. DTD structure:\\
+\code{<!DOCTYPE <root tag> [}\\
+\code{  <!ELEMENT <name>(<components>)>}\\
+\code{]>}
+            \item Uses regex \code{?*()|+,}
+            \item \code{(#PCDATA)} means \emph{parsed character data} e.g. text
+            \item \code{#IMPLIED} means optional, otherwise \code{#REQUIRED}
+            \item Use \code{ID} and \code{IDREF(S)} in DTD to enforce constraints
+            \item Use \code{SYSTEM "foo"} in doctype tag to specify source for dtd
+        \end{itemize}
+        \item \code{JSON}
+        \begin{itemize}
+            \item Unordered sets of name/value pairs
+            \item Normal: \lstinline|{a:b, c:d}|
+            \item Arrays are ordered: \code{[a,b,c,]}
+            \item Strings wrapped in double quotes support backslash escapes
+            \item Numbers: integer, real, scientific
+        \end{itemize}
+    \end{itemize}
+    \item \code{STAR SCHEMA}
+    \begin{itemize}
+        \item Common organization for OLAP data in a warehouse
+        \item \code{DIMENSION TABLE}
+        \begin{itemize}
+            \item Smaller, largely static info describing the data that's in the Fact
+            \item 
+        \end{itemize}
+        \item \code{FACT TABLE}
+        \begin{itemize}
+            \item Large accumulation of facts such as sales
+            \item The key consists of values from dimension tables (foreign keys)
+            \item Facts usually `insert mostly' with rare updates
+            \item \emph{Dimension Attributes:} The key of a dimension table, references Dimenson Tables
+            \item \emph{Dependent Attributes:} A fact value determined by the dimension attributes
+        \end{itemize}
+        \item \emph{Roll-up} means aggregate along one or more dimensions
+        \item \emph{Drill-Down} means `dis-aggregate' or break an aggregate into its constituent parts
+    \item \code{R [LEFT, RIGHT, FULL] OUTER JOIN S [ON <condition>]}: 
+    \begin{itemize}
+        \item Used to join $R$ and $S$ where there exists some tuple in $R$ which has no match in
+        $S$
+        \item Fills in missing attributes wiht \code{NULL}
+        \item \code{LEFT} means pad dangling tuples of $R$ only (and vice versa)
+        \item \code{FULL} means pad both, default
+    \end{itemize}
+    \item Taking the cartesian product of the dimension table keys, then taking 
+    \code{LEFT OUTER JOIN} of that with the fact table, will give you entries for every combination of dimensions
+    (not just those that have entries in the fact table)
+    \item \code{COALESCE(x, 0)} has value $x$ if $x$ isn't \code{NULL}, otherwise \code{0}.
+    \end{itemize}
+    \item \code{ACID}
+    \begin{itemize}
+        \item \code{ATOMICITY}: An atomic transaction happens as one unit, either the whole thing
+        commits or none of it does.
+        \item \code{CONSISTENCY}: A consistent transaction brings the DB from one valid state to
+        another valid state with respect to any constraints.
+        \item \code{ISOLATION}: Concurrent isolated transactions would have the same result if run sequentially.
+        \item \code{DURABILITY}: A committed transaction will remain committed even in the event of
+        a hardware failure.
+    \end{itemize}
+\end{itemize}
+    \end{multicols}
+
+\end{document}
